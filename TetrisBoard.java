@@ -1,12 +1,9 @@
 public class TetrisBoard{
-	
 
-	// YAAA HEARDDDDD
-	
 	/**
-	* 2-D array of the blocks which make up the tetris board
+	* 2-D array of the colors which make up the tetris board
 	*/
-	Block[][] board; 
+	Color[][] board; 
 
 	/**
 	* 2-D array which holds the x & y coordinates of the 4 falling blocks
@@ -22,6 +19,8 @@ public class TetrisBoard{
 	* enum class for the Different types of Tetrimono pieces
 	*/	
 	enum Tetrimono{O,L,S,Z,J,T}
+	
+	enum Color{YELLOW, BLUE, RED, GREEN, ORANGE, PINK, PURPLE, BLANK}
 
 	/**
 	* number of rows on the board
@@ -41,10 +40,10 @@ public class TetrisBoard{
 	public TetrisBoard(){
 		numOfCols = 20;
 		numOfRows = 20;
-		board = new Block[numOfRows][numOfCols];
+		board = new Color[numOfRows][numOfCols];
 		for(int i = 0 ; i < board.length; i++){
 			for(int j = 0; j < board[0].length; j++){
-				board[i][j] = new Block();
+				board[i][j] = Color.BLANK;
 			}
 		}
 
@@ -61,7 +60,7 @@ public class TetrisBoard{
 	*/
 	public void dropNewPiece(Tetrimono type){
 		int mid = numOfCols/2; //index of the center column of board
-		Block.Color c; //Color of the new piece
+		Color c =  Color.BLANK; //Color of the new piece
 
 		switch(type){
 			
@@ -80,6 +79,7 @@ public class TetrisBoard{
 
 			case J:*/
 
+
 			case T: 
 			fallingPiecePos[0][0] = 0; //row 
 			fallingPiecePos[0][1] = mid -1; //column
@@ -92,14 +92,13 @@ public class TetrisBoard{
 
 			fallingPiecePos[3][0] = 1;
 			fallingPiecePos[3][1] = mid;
-
-			c = Block.Color.YELLOW;
+			c = Color.YELLOW;
 			break;
 			
 		}
 
 		for(int i = 0 ; i < fallingPiecePos.length; i++){
-			board[fallingPiecePos[i][0]][fallingPiecePos[i][1]].setColor(c);
+			board[fallingPiecePos[i][0]][fallingPiecePos[i][1]] = c;
 		}
 
 		pieceFalling = true;
@@ -114,7 +113,7 @@ public class TetrisBoard{
 		for(int i =0; i< board.length; i++){
 			for(int j = 0 ; j< board[0].length; j++){
 				res +="[";
-				if(board[i][j].color() != Block.Color.BLANK){
+				if(board[i][j] != Color.BLANK){
 					res+="X";
 				}else{
 					res += " ";
